@@ -1,0 +1,97 @@
+<!--
+# Copyright 2015 IBM
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+-->
+{% extends "Watson/base.html" %}
+
+{% block title_html %}
+  Personality Insights 
+{% endblock %}
+
+{% block core_body %}
+  <div>Personality Insight Credentials</div>
+  <div>
+  <table id="id_credtable">
+    <thead>
+      <tr>
+        <th>Credential</th>
+        <th>Value</th>
+	  </tr>
+      <tr>
+	    <td>URL</td>
+	    <td>{{ url }}</td>
+	  </tr>
+	</thead>  
+    <tr>
+	  <td>User</td>
+	  <td>{{ username }}</td>
+	</tr>
+  </table> 
+</div>  
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table>
+        <tr>
+	      <td>
+	        <input type="checkbox" id="id_twittersearch" name="twittersearch"></input>
+	      </td>
+	      <th>
+	        <label for="id_twittersearch">Search Twitter timeline</label>
+	      </th>
+	    </tr>
+        <tr id="id_datarow">
+	      <th>
+	        <label for="id_data">Data:</label>
+	      </th>
+	      <td>
+	        <textarea cols="40" id="id_data" name="data" rows="10"></textarea>
+	      </td>
+	    </tr>
+        <tr>
+	      <th>
+	        <label id="id_personlabel" for="id_personality">Personality:</label>
+	      </th>
+	      <td>
+	        <input id="id_personality" name="personality" type="text" />
+	      </td>
+	    </tr>
+      </table>
+
+      <button onclick="javascript:perform_pi('{% url "watson:piapi" %}')">Process Personality</button>
+    </div>
+
+    <br />
+    <div><span id="id_response" class="label label-info"></span></div>
+    <br />
+
+    <div id="id_traits">
+      <div>Traits:</div>
+	    <table id="id_traitstable">
+          <thead>
+            <th>Trait</th>
+            <th>Percentile</th>
+	      </thead>
+	      <tbody>
+	      </tbody>
+	    </table>  
+    </div>
+	
+
+  </div>
+
+{% endblock %}
+
+{% block script_extras %} 
+	<script type="text/javascript" src="/static/Watson/js/piservices.js"></script>
+{% endblock %}

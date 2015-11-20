@@ -1,0 +1,57 @@
+<!--
+# Copyright 2015 IBM
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+-->
+{% extends "Watson/base.html" %}
+
+{% block title_html %}
+{% endblock %}
+
+{% block h1 %} 
+{{ object.personality }}
+{% endblock %}
+
+{% block core_body %}
+
+<h1></h1>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div>
+  <table>
+    <tr>
+      <th>Trait</th>
+      <th>Percentile</th>
+	</tr>
+    <tr>
+	  <td>Openness</td>
+	  <td>{{ object.Openness }}</td>
+	</tr>
+    <tr>
+	  <td>Conscientiousness</td>
+	  <td>{{ object.Conscientiousness }}</td>
+	</tr>
+    <tr>
+	  <td>Extraversion</td>
+	  <td>{{ object.Extraversion }}</td>
+	</tr>
+    <tr>
+	  <td>Agreeableness</td>
+	  <td>{{ object.Agreeableness }}</td>
+	</tr>
+    <tr>
+	  <td>Emotional range</td>
+	  <td>{{ object.Emotional_range }}</td>
+	</tr>
+  </table> 
+</div>  
+{% endblock %}
+

@@ -1,0 +1,363 @@
+{
+   "language":"en",
+   "name": "Games and Sports",
+   "training_data": [
+	{
+		"text": "British rider Chris Froome is not wearing the yellow jersey despite moving into the overall lead before stage seven of the Tour de France",
+		"classes": [ "Cycling", "TourDeFrance" ]
+	},	
+	{
+		"text":"Cancellara completed stage three but lost the yellow jersey to Froome because he crashed 60km from the finish line and crossed the line 11 minutes adrift.",
+		"classes": ["Cycling"]
+	},
+	{
+		"text":"Britain's Andy Murray will seek to reach his third Wimbledon final when he takes on seven-time champion Roger Federer in Friday's second semi-final",
+		"classes":["LawnTennis", "Wimbledon"]
+	},
+	{
+		"text":"A lot has happened to Murray in the three years since he choked back the tears on Centre Court after a four-set defeat to Federer.",
+		"classes":["LawnTennis"]
+	},
+	{
+		"text":"The number two seed has dropped only one set en route to his last-four clash with the British number one ",
+		"classes":["LawnTennis"]
+	},
+	{
+		"text":"Holder and world number one Djokovic believes he will be coming up against one of the finest backhands in the world",
+		"classes":["LawnTennis"]
+	},
+	{
+		"text":"The 33-year-old, who has served two doping bans, ran in 9.75 seconds ahead of next month's world championships",
+		"classes":["Athletics", "100m"]
+	},
+	{
+		"text":"'I love this track,' he said. 'Last year I ran 9.79 seconds, and this year there was more competition.' ",
+		"classes":["Athletics", "100m"]
+	},
+	{
+		"text":"I want to enjoy my football and I also want to enjoy my life",
+		"classes":["Football"]
+	},
+	{
+		"text":"Golf fans can follow every shot of the 2015 Open Championship",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Albania have been awarded a 3-0 victory over Serbia in a reversal of a Uefa decision made after a European Championship qualifier was abandoned. ",
+		"classes":["Football"]
+	},
+	{
+		"text":"Jamaica's two-time Olympic 100m and 200m champion has struggled with injury this year but will return for the event ",
+		"classes":["Athletics", "100m", "200m"]
+	},
+	{
+		"text":"Bolt, 28, has run just five times this season, clocking a 100m best of 10.12 seconds in April.",
+		"classes":["Athletics", "100m"]
+	},
+	{
+		"text":"The world number two, 21, shot a level-par 71 to finish eight shots off the pace after the first round",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Spieth may have to shoot a score in the region of four-under for his second round to make the cut ",
+		"classes":["Golf"]
+	},
+	{
+		"text":"He's a good fighter but the people he has taken out are not as good as me ",
+		"classes":["Boxing"]
+	},
+	{
+		"text":"Southpaw Flanagan, who is unbeaten in 27 pro fights with 10 knockouts, is the second of three British boxers",
+		"classes":["Boxing"]
+	},
+	{
+		"text":"Persie scores with superb header",
+		"classes":["Football"]
+	},
+	{
+		"text":"Peralta scored a hat-trick",
+		"classes":["Football"]
+	},
+	{
+		"text":"Lauren Holiday volleyed in after Azusa Iwashimizu's woeful header ",
+		"classes":["Football"]
+	},
+	{
+		"text":"Sanchez slotted in the winning spot-kick after Argentina's Gonzalo Higuain fired over",
+		"classes":["Football"]
+	},
+	{
+		"text":"The Mercedes driver had to fight for his fifth win of the year after a bad start left him third  ",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Hamilton started from pole position ahead of team-mate Nico ",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Hamilton moved ahead of the Williams cars at his first pit stop and then had an agonising call to make on the timing of another pit stop for wet tyres",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Williams have no regrets about letting their drivers race despite failing to finish on the podium after a strong start",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"The Mercedes driver fought back to take the lead at the first pit stops.",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Hamilton fended off a challenge from Bottas for second on the first lap, at the end of which the safety car was deployed because of a pile-up at the first corner",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"A quick pit stop and a strong first lap out of the pits ",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"the two cars were side by side as they went down the pits",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Ecclestone is pushing to impose an engine freeze in a bid to make racing more competitive",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"information such as tyre pressures and temperatures and brake condition will be available to the driver on his dashboard",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Hamilton beat team-mate Nico Rosberg in an all-Mercedes battle for pole position at the British GP.",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"Hamilton's pole lap was 0.837secs quicker than Massa in third.",
+		"classes":["MotorRacing"]
+	},
+	{
+		"text":"England lose three wickets in extending their lead over Australia beyond 200 in the first Ashes Test.",
+		"classes":["Cricket", "Ashes" ]
+	},
+	{
+		"text":"the star performer for the hosts, scoring a delightful 77 to help England get to 430 all out and taking two wickets ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"He reminds me of David Gower in the way he stands up over the ball and, without much foot movement, drives right through the ball. ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Australia went after him and capped an excellent day with the wickets ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Moeen is still developing as a bowler, so the shrewder tactic would have been to wait for the inevitable bad ball every couple of overs and hit it for four. ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"James Anderson bowled that fuller length, constantly probing for edges or lbws with a little bit of swing either way. ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"He bowled at a decent pace, beat Clarke a couple of times for speed, swung the ball both ways and looked dangerous. ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Starc was flattered by his figures as he picked up a five-wicket haul. ",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"I didn't like the way he ducked a ball that hit him on the helmet, but he got 18 valuable runs, which should do him good",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Munsey made 62 not out from 36 balls as the Scots easily chased down a total of 109 with 10 overs to spare.",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Spinners Michael Leask and Mark Watt each took three wickets as UAE were skittled out cheaply inside 19 overs",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"Munsey hit 11 fours and one six in his impressive innings",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"UAE made 21 in the first two overs at the Grange, but wickets tumbled with regularity, with the middle order disappearing in flurry of rash strokes",
+		"classes":["Cricket"]
+	},
+	{
+		"text":"England scored three tries to Canada's one",
+		"classes":["Rugby"]
+	},
+	{
+		"text":"Winger Kay Wilson crossed twice and hooker Amy Cokayne scored the other try for England",
+		"classes":["Rugby"]
+	},
+	{
+		"text":"back-row Ross Moriarty and Exeter tight-head prop Tom Francis, are fighting for a place ",
+		"classes":["Rugby"]
+	},
+	{
+		"text":"The aim is to score tries by passing the ball backwards using the hands. ",
+		"classes":["Rugby"]
+	},
+	{
+		"text":"scrum-half Matty Smith kicked a late penalty",
+		"classes":["Rugby"]
+	},
+	{
+		"text":"Murray and Australian John Peers beat Jonathan Erlich and Philipp Petzschner 4-6 6-3 6-4 6-2 to reach their first Grand Slam men's doubles final. ",
+		"classes":["Tennis"]
+	},
+	{
+		"text":"Rose three shots off lead after round one",
+		"classes":["Golf"]
+	},
+	{
+		"text":"The Englishman shot a four-under-par 66",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Mickelson, who won this event at Castle Stuart in 2013, dropped two shots in his first four holes and ended the day on one under par ",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Rose carded his only bogey at the par-three 17th but immediately recovered the shot at the last hole",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Olesen made seven birdies in a flawless round to lead by one shot",
+		"classes":["Golf"]
+	},
+	{
+		"text":"Smith set a British Championships record to claim the 100m title",
+		"classes":["Athletics", "100m"]
+	},
+	{
+		"text":"The 19-year-old clocked 11.08 seconds at Alexander Stadium - just six hundredths of a second off the national record she set in May.",
+		"classes":["Athletics", "100m"]
+	},
+	{
+		"text":"Laura Muir took the 1500m title and Greg Rutherford won the long jump. ",
+		"classes":["Athletics", "1500m", "LongJump"]
+	},
+	{
+		"text":"He has already jumped further this season than the mark achieved in winning gold",
+		"classes":["Athletics", "LongJump"]
+	},
+	{
+		"text":"Rutherford, 28, jumped 8.35m in Birmingham in June",
+		"classes":["Athletics", "LongJump"]
+	},
+	{
+		"text":"Henderson leads the world rankings, having achieved 8.50m and 8,44m already this year.",
+		"classes":["Athletics", "LongJump"]
+	},
+	{
+		"text":"Thompson has not completed a heptathlon this year",
+		"classes":["Athletics", "Heptathlon"]
+	},
+	{
+		"text":"Hill achieved the same position over 100m hurdles,",
+		"classes":["Athletics", "Hurdles"]
+	},
+	{
+		"text":"Child dominated her 400m hurdles final to defend her British title in 55.57",
+		"classes":["Athletics", "400m"]
+	},
+	{
+		"text":"Sharp won the 800m in 2:02.40",
+		"classes":["Athletics", "800m"]
+	},
+	{
+		"text":"Farah won the 5,000m at the Diamond League in Lausanne",
+		"classes":["Athletics", "5K"]
+	},
+	{
+		"text":"Farah is due to race over 1500m in Monaco ",
+		"classes":["Athletics", "5K"]
+	},
+	{
+		"text":"Hughes ran a personal best 20.13 to win the 200m",
+		"classes":["Athletics", "200m"]
+	},
+	{
+		"text":"Taylor beat the meet's triple jump record with a leap of 18.06m, the fourth longest of all-time.",
+		"classes":["Athletics", "TripleJump"]
+	},
+	{
+		"text":"Chicherova won the women's high jump with the best jump of the year - 2.03m. ",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"11am and still not hungry, principally because I went out for food last night.",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"Flight delayed by 25 mins. Another 25 and I can breakfast in the lounge.",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"Once again the actual readings for my gas & electric bills are half what the  estimated readings bill was.",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"Almost home, although the train is currently stopped between Ashurst and Brockenhurst due to signalling problems.",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"I think that there is still room on the roof of the train. ",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"Train stuck somewhere between Winchester and Basingstoke.",
+		"classes":["NoSports"]
+	},
+	{
+		"text":"So conversing a lot, getting a dry mouth, and no chance of anything to drink until 9:20pm.",
+		"classes":["NoSports"]
+	},	
+	{
+		"text":"Ramadan 20. This might be the most difficult fast so far this year.",
+		"classes":["NoSports"]
+	},	
+	{
+		"text":" if you have one a sample would be much appreciated. I have also asked this question on developerworks.",
+		"classes":["NoSports"]
+	},	
+	{
+		"text":" I at a conf with the IOT blumix team, who have a camera on a drone. They are looking to use the face recognition api.",
+		"classes":["NoSports"]
+	},	
+	{
+		"text":"hack completed, prizes awarded and then the Group photo.",
+		"classes":["Hackathon"]
+	},	
+	{
+		"text":"Most tests might not make the 5th day. This Edgbaston test might not make the 4th",
+		"classes":["Cricket"]
+	},	
+	{
+		"text":"Winners of the IBM #hackathon #bluemix #ibmwatson competition",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"Team making use of #Bluemix in an app that provides career advise making use of #ibmwatson PI api.",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"Team teleScrypts created a global healthcare mobile application using #Bluemix",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"and the final session begins at the EIA hackathon",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"Finally got round to reading Watchman this weekend. Can now go back to listening to Book at Bedtime on R4.",
+		"classes":["BookReading"]
+	}	
+    ]
+}	
+

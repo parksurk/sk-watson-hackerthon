@@ -1,0 +1,73 @@
+<!--
+# Copyright 2015 IBM
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+-->
+{% extends "Watson/base.html" %}
+
+{% block title_html %}
+  Tradeoff Analytics
+{% endblock %}
+
+{% block core_body %}
+
+  <div id="id_datastore">Tradeoff Analytics Credentials</div>
+  <div id="id_tempstore"></div>
+  <div id="id_urlstore"></div>
+  <div>
+  <table id="id_credtable">
+    <thead>
+      <tr>
+        <th>Credentials</th>
+        <th>Value</th>
+	  </tr>
+	</thead>
+    <tr>
+	  <td>URL</td>
+	  <td>{{ url }}</td>
+	</tr>
+    <tr>
+	  <td>User</td>
+	  <td>{{ username }}</td>
+	</tr>
+  </table> 
+</div>  
+<br />
+<div id="id_req_params">
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+	  <table>
+	    {{ form.as_table }}
+	  </table>
+    </div>
+  </div>	
+  <div>
+    <button id="id_analyse_button" onclick="javascript:onAnalyseClick('{% url "watson:taproblemapi" %}')">Perform Analytics</button>
+  </div>
+</div>
+
+<br />
+<div><span id="id_response" class="label label-info"></span></div>
+<br />
+
+<div id="id_responseWidget" class="tawidget">
+  <div id="taWidgetContainer" ></div>
+</div>
+
+{% endblock %}
+
+
+{% block script_extras %} 
+  <script type="text/javascript" src="http://ta-cdn.mybluemix.net/v1/TradeoffAnalytics.js"></script> 
+  <script type="text/javascript" src="/static/Watson/js/taservices.js"></script>
+{% endblock %}
