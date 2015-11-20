@@ -108,13 +108,14 @@ function listOK(response) {
 										+ 'Drop</button></span></td>'
 										+ '</td></tr>';
 		          $('#id_cstable > tbody:last-child').append(testerRow);
+                  $('#id_cstable > tbody:last-child button')[0].click();
 			  }
-			  $('#id_classifiers').show();
+			  //$('#id_classifiers').show();
 			  if (inTraining) {
-                $(id_refreshButton).show();	
+              //  $(id_refreshButton).show();	
                 $(".dropbutton").hide();				
 			  } else {
-				$(".dropbutton").show();  
+				// $(".dropbutton").show();  
 			  }	  
 		  }
 	  }	  
@@ -323,7 +324,8 @@ function appendResponseRow(e) {
 								+ '</td><td>' + e["message"]
 								+ '</td></tr>';
 								
-	$('#id_classtable > tbody:last-child').append(testerRowX);			
+	$('#id_classtable > tbody:last-child').append(testerRowX);	
+	$('#id_line').append($('<li>').text(e["message"]));
 }
 
 function addHoverAnimations(fields) {

@@ -1,0 +1,181 @@
+<!--
+# Copyright 2015 IBM
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+-->
+{% extends "Watson/base.html" %}
+
+{% block title_html %}
+  Natural Language Classifier 
+{% endblock %}
+
+{% block core_body %}
+
+	<div>Natural Language Index</div>
+	<!-- <div><a href="{% url 'watson:newclassifier' %}">Create New Classification</a></div> -->
+	<div style="display:none"><a id="id_newclassoption" href="#" onclick="javascript:onNewClassOption()">Create New Classification</a>
+		<form id="id_newclassform" 
+		      class="form-inline" 
+			  action="{% url 'watson:newclassifierx' %}" 
+			  enctype="multipart/form-data"
+			  method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="id_classInputFile">Classification File input</label>
+				<input type="file" id="id_classInputFile" name="classInputFile" class="form-control" />
+					<p class="help-block">Select Classification File in JSON format.</p>
+			</div>
+			<button type="submit" class="btn btn-default" id="id_sendbutton" onclick="javascript:onNewClass()">Send</button>
+		</form>
+	</div>	
+	<div style="display:none">
+	<table id="id_credtable">
+	  <thead>
+		<tr>
+		  <th>Credential</th>
+		  <th>Value</th>
+		</tr>
+      </thead>		
+		<tr>
+		  <td>URL</td>
+		  <td>{{ url }}</td>
+		</tr>
+		<tr>
+		  <td>User</td>
+		  <td>{{ username }}</td>
+		</tr>
+	  </table> 
+	</div> 
+
+   <div class="panel panel-default">
+     <div class="panel-body">	
+	   <div style="display:none">
+	     <span id="id_refreshButton">
+		   <button onclick="javascript:onRefresh()">Refresh</button>
+		  </span> The Classifiers and status are:
+        </div>
+	  
+		 <div style="display:none" id="id_classifiers">
+			 <table id="id_cstable" class="table">
+			   <thead>
+				 <th>Classifier</th>
+				 <th>Status</th>
+				 <th>URL</th>	
+			   </thead>
+			   <tbody>
+				  {% if results and results.classifiers %}
+				    {% for nlc in results.classifiers %}					  
+    				  <tr class="normal-tablerow">
+						<td>
+                          {% if "Available" == nlc.status.status %} 						
+						    <button class="rowselector" onclick="javascript:onClassifierSelected('{{nlc.name}}','{{nlc.url}}')">
+						      {{nlc.name}}
+						    </button>
+						  {% else %}
+						      {{nlc.name}}      						  
+						  {% endif %}
+						</td>
+				        <td>{{nlc.status.status}}</td>
+						<td>{{nlc.url}}</td>  
+						<td>
+                          {% if "Available" == nlc.status.status %} 	
+						    <button class="rowselector" onclick="javascript:onDropClassifier('{{nlc.name}}','{% url 'watson:nldrop' %}','{{nlc.url}}')">
+						      Drop
+						    </button>
+						  {% endif %} 
+						</td>
+					  </tr>	
+					{% endfor %}	
+				  {% else %}
+					<tr><td rowspan="3">No Classifiers Found<td></tr>
+				  {% endif %}
+			   </tbody>
+			 </table>  
+		</div>	  
+	  
+	  {% if results.error %}
+	    <div>Error Detected - {{results.error}}</div>
+	  {% endif %}
+	  
+	  <br />
+	  <div><span id="id_response" class="label label-info"></span></div>
+	  <br />
+	  
+	  <div>
+        <table style="display:none">
+          <tr>
+	        <th>
+	          <label for="id_twitClassifier">Classifier:</label>
+	        </th>
+	        <td>
+	          <input id="id_twitClassifier" name="twitClassifier" type="text" />
+	        </td>
+	      </tr>
+          <tr>
+	        <th>
+	          <label for="id_twitID">Twitter ID:</label>
+	        </th>
+	        <td>
+	          <input id="id_twitID" name="twitID" type="text" />
+	        </td>
+	      </tr>
+        </table>
+
+        <div>
+          <button id="id_twitButton" onclick="javascript:onTwitClick('{% url 'watson:nltwitsearch' %}')">
+		    Twitter Check
+		  </button>
+        </div>
+		<div>
+		  <button type="button" id="id_recordButton">
+			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Record
+		  </button>
+		  <button type="button" id="id_stopButton">
+			<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+		  </button>
+		  <div id="id_datastore"></div>
+		</div>
+      </div>
+  
+      <br />	  
+
+      <div id="id_classifications">
+        <div>Tweet Classifications:</div>
+	      <table id="id_classtable" class="table">
+            <thead>
+              <th>Classification</th>
+              <th>Confidence</th>
+              <th>Message</th>
+	        </thead>
+	        <tbody>
+	        </tbody>
+	      </table>  
+      </div>
+  </div>	
+    </div>	
+      </div>	
+  </div>	
+
+
+  <div id="id_chatlog">
+    <ul id="id_line">
+        
+    </ul>
+  </div>
+		
+
+{% endblock %}
+
+{% block script_extras %} 
+	<script type="text/javascript" src="/static/Watson/js/lcservices.js"></script>
+	<script type="text/javascript" src="/static/Watson/js/stservices.js"></script>
+{% endblock %}
