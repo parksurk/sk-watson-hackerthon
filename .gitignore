@@ -1,4 +1,4 @@
 __pycache__
-.pyc
-.wav
+*.pyc
+*.wav
 credentials.json
