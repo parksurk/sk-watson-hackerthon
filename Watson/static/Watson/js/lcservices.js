@@ -328,14 +328,15 @@ function appendResponseRow(e) {
 	}
 	else {
 		var testerRowX = '<tr class="twitclassline"><td>' +  ''
-							+ '</td><td>' + e["confidence"].toFixed(2) 
+							+ '</td><td>' + e["confidence"] 
 							+ '</td><td>' + e["message"]
 							+ '</td></tr>';
 	}
 
 								
 	$('#id_classtable > tbody:last-child').append(testerRowX);	
-	$('#id_line').append($('<li>').text(e["message"]));
+	$('#id_line').append($('<li>').addClass('question').text(e["question"]));
+	$('#id_line').append($('<li>').addClass('answer').text(e["message"]));
 }
 
 function addHoverAnimations(fields) {
@@ -369,6 +370,10 @@ function handleAudioAsInput(audioBlob) {
 			error: audioSentNotOK
 		});
 	}else{
+        fd.append('client_id', client_id);
+        fd.append('conversation_id', conversation_id);
+        fd.append('dialog_id', dialog_id);
+        fd.append('category', category);
 		$.ajax({
 			type: 'POST',
 			url: '/watson/staudio',
@@ -401,6 +406,23 @@ function audioSentOK(response) {
 			var e;
 			if (results.hasOwnProperty('classification')) {
 				e = results['classification'];
+			} else if (results.hasOwnProperty('conversationData')){
+				e = {
+					message: results['conversationData']['response'],
+					confidence: "client_id:" + results['conversationData']['client_id'] + ", " + "conversation_id:" + results['conversationData']['conversation_id'] + ", " + "dialog_id:" + results['conversationData']['dialog_id'],
+                    client_id: results['conversationData']['client_id'],
+                    conversation_id: results['conversationData']['conversation_id'],
+                    dialog_id: results['conversationData']['dialog_id'],
+                    response: results['conversationData']['response'],
+                    question: results['question']
+
+                    }
+                category = results['category'],
+                client_id = results['conversationData']['client_id'],
+                conversation_id = results['conversationData']['conversation_id'],
+                dialog_id = results['conversationData']['dialog_id'],
+                response = results['conversationData']['response']
+                $("#id_withNLC").prop('checked', false)
 			} else if (results.hasOwnProperty('transcript')){
 				e = {
 					message: results['transcript'],

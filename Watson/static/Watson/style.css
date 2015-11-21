@@ -553,3 +553,14 @@ button {
 .opened {
 	background-position: left -10px;
 }
+
+.question {
+    list-style: none;
+    text-align: left;
+    
+}
+
+.answer {
+    list-style: none;
+    text-align: right;
+}

@@ -15,6 +15,7 @@
 
 import os
 import json
+import requests
 import base64
 
 from django import forms
@@ -255,8 +256,17 @@ def staudio(request):
               if "alternatives" in res:
                 alt = res["alternatives"][0]
                 if "transcript" in alt:
+                  question = alt["transcript"]
                   # theData = classifyTranscript(classURL, alt["transcript"])
-				  theData = alt
+                  data = {"txt": alt["transcript"],
+                    "conversation_id": request.POST["conversation_id"],
+                    "client_id": request.POST["client_id"],
+                    "dialog_id": request.POST["dialog_id"],
+                  } 
+                  res = sendDialogAPI(request.POST["category"], {'data': json.dumps(data)}) 
+                  theData = res['results']  
+                  theData['category'] = request.POST["category"]
+                  theData['question'] = question
       fj.close()	   
   results["results"] = theData		
   return HttpResponse(json.dumps(results), content_type="application/json") 
@@ -316,11 +326,39 @@ def staudio_with_nlc(request):
               if "alternatives" in res:
                 alt = res["alternatives"][0]
                 if "transcript" in alt:
+                  question = alt["transcript"]
                   theData = classifyTranscript(classURL, alt["transcript"])
+                  data = {"txt": alt["transcript"],
+                    "conversation_id":"",
+                    "client_id":""
+                  }
+                  if not 'classification' in theData:
+                    raise Exception('Classificatio failed: {}'.format(theData))
+                  category = theData["classification"]["top_class"]
+                  res = sendDialogAPI(category, {'data': json.dumps(data)}) 
+                  theData = res['results']
+                  theData['category'] = category
+                  theData['question'] = question
+                  
       fj.close()	   
   results["results"] = theData		
   return HttpResponse(json.dumps(results), content_type="application/json") 
-  
+
+def sendDialogAPI(classfier, message):
+    if classfier == "Accomodations":
+        url = "http://jseo-proj-watson.bluemix.net/wl/lang"
+    elif classfier == "restaurants":
+        url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
+    print 'requesting to {} for "{}"'.format(url, message)
+    response = requests.post( url ,
+                         data = message,
+                         )
+    try:
+      result = json.loads(response.text)
+      return result
+    except:
+      raise Exception("Error processing the request, HTTP: %d" % response.status_code)
+
 def classifyTranscript(classURL, transcript):	
   # Runs classification against a transcript
   # The classifier url must be passed in, as it contains the classifier id.
