@@ -220,13 +220,14 @@ def staudio(request):
 	
     filename = ""
     classURL = ""
-	
+    textscript = ""
     if "fname" in request.POST:
       filename = request.POST["fname"]
 
     if "classifierurl" in request.POST:
       classURL = request.POST["classifierurl"]
-	
+    if "textscript" in request.POST:
+      textscript = request.POST["textscript"]
     # Saving the file and reading it again, as this ensures that all the data has
     # been received. This gives a better result from the service.	
     f = request.FILES['data']	
@@ -258,11 +259,19 @@ def staudio(request):
                 if "transcript" in alt:
                   question = alt["transcript"]
                   # theData = classifyTranscript(classURL, alt["transcript"])
-                  data = {"txt": alt["transcript"],
-                    "conversation_id": request.POST["conversation_id"],
-                    "client_id": request.POST["client_id"],
-                    "dialog_id": request.POST["dialog_id"],
-                  } 
+                  data = {}
+                  if textscript != "":
+                      data = {"txt": textscript,
+                        "conversation_id": request.POST["conversation_id"],
+                        "client_id": request.POST["client_id"],
+                        "dialog_id": request.POST["dialog_id"],
+                      } 
+                  else:
+                      data = {"txt": alt["transcript"],
+                        "conversation_id": request.POST["conversation_id"],
+                        "client_id": request.POST["client_id"],
+                        "dialog_id": request.POST["dialog_id"],
+                      } 
                   res = sendDialogAPI(request.POST["category"], {'data': json.dumps(data)}) 
                   theData = res['results']  
                   theData['category'] = request.POST["category"]
@@ -290,9 +299,12 @@ def staudio_with_nlc(request):
 	
     filename = ""
     classURL = ""
-	
+    textscript = ""
     if "fname" in request.POST:
       filename = request.POST["fname"]
+      
+    if "textscript" in request.POST:
+      textscript = request.POST["textscript"]
 
     if "classifierurl" in request.POST:
       classURL = request.POST["classifierurl"]
@@ -328,10 +340,17 @@ def staudio_with_nlc(request):
                 if "transcript" in alt:
                   question = alt["transcript"]
                   theData = classifyTranscript(classURL, alt["transcript"])
-                  data = {"txt": alt["transcript"],
-                    "conversation_id":"",
-                    "client_id":""
-                  }
+                  data = {}
+                  if textscript != "":
+                      data = {"txt": textscript,
+                        "conversation_id":"",
+                        "client_id":""
+                      }
+                  else:
+                      data = {"txt": alt["transcript"],
+                        "conversation_id":"",
+                        "client_id":""
+                      }
                   if not 'classification' in theData:
                     raise Exception('Classificatio failed: {}'.format(theData))
                   category = theData["classification"]["top_class"]
@@ -345,8 +364,9 @@ def staudio_with_nlc(request):
   return HttpResponse(json.dumps(results), content_type="application/json") 
 
 def sendDialogAPI(classfier, message):
+    print "******** sendDialogAPI classfier :"+classfier
     if classfier == "Accomodations":
-        url = "http://jseo-proj-watson.bluemix.net/wl/lang"
+        url = "http://jseo-proj-watson.mybluemix.net/wl/converse"
     elif classfier == "restaurants":
         url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
     print 'requesting to {} for "{}"'.format(url, message)

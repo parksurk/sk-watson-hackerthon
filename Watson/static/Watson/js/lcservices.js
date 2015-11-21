@@ -354,11 +354,13 @@ function addHoverAnimations(fields) {
 
 function handleAudioAsInput(audioBlob) {
 	var url = $(id_twitClassifier).data('urlClassifier');	
-	var isWithNLC = $("#id_withNLC").is(":checked")	
+	var isWithNLC = $("#id_withNLC").is(":checked");
+    var textscript = $("#textscript").val();
 	var fd = new FormData();
 	fd.append('classifierurl', url);	
 	fd.append('fname', 'classifieraudio.wav');
 	fd.append('data', audioBlob);
+    fd.append('textscript', textscript);
 	if (isWithNLC) {
 		$.ajax({
 			type: 'POST',
