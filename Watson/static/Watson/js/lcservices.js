@@ -319,10 +319,20 @@ function twitOK(response) {
 }
 
 function appendResponseRow(e) {
-	var testerRowX = '<tr class="twitclassline"><td>' + e["top_class"] 
-			                    + '</td><td>' + e["confidence"].toFixed(2) 
-								+ '</td><td>' + e["message"]
-								+ '</td></tr>';
+	if (e.hasOwnProperty("top_class")) {
+		var testerRowX = '<tr class="twitclassline"><td>' + e["top_class"] 
+							+ '</td><td>' + e["confidence"].toFixed(2) 
+							+ '</td><td>' + e["message"]
+							+ '</td></tr>';
+
+	}
+	else {
+		var testerRowX = '<tr class="twitclassline"><td>' +  ''
+							+ '</td><td>' + e["confidence"].toFixed(2) 
+							+ '</td><td>' + e["message"]
+							+ '</td></tr>';
+	}
+
 								
 	$('#id_classtable > tbody:last-child').append(testerRowX);	
 	$('#id_line').append($('<li>').text(e["message"]));
@@ -343,19 +353,33 @@ function addHoverAnimations(fields) {
 
 function handleAudioAsInput(audioBlob) {
 	var url = $(id_twitClassifier).data('urlClassifier');	
+	var isWithNLC = $("#id_withNLC").is(":checked")	
 	var fd = new FormData();
 	fd.append('classifierurl', url);	
 	fd.append('fname', 'classifieraudio.wav');
 	fd.append('data', audioBlob);
-	$.ajax({
-		type: 'POST',
-		url: '/watson/staudio',
-		data: fd,
-		processData: false,
-		contentType: false,
-		success: audioSentOK,
-		error: audioSentNotOK
-	});
+	if (isWithNLC) {
+		$.ajax({
+			type: 'POST',
+			url: '/watson/staudio_with_nlc',
+			data: fd,
+			processData: false,
+			contentType: false,
+			success: audioSentOK,
+			error: audioSentNotOK
+		});
+	}else{
+		$.ajax({
+			type: 'POST',
+			url: '/watson/staudio',
+			data: fd,
+			processData: false,
+			contentType: false,
+			success: audioSentOK,
+			error: audioSentNotOK
+		});
+	}
+
 	setStatusMessage('i', "Audio sent to server, waiting for a response");	
 }
 
@@ -374,7 +398,15 @@ function audioSentOK(response) {
 			setStatusMessage('d', errMessage);	
 		}	
 		else {
-			var e = results['classification'];		  
+			var e;
+			if (results.hasOwnProperty('classification')) {
+				e = results['classification'];
+			} else if (results.hasOwnProperty('transcript')){
+				e = {
+					message: results['transcript'],
+					confidence: results['confidence']
+				}
+			}
 			$('#id_classtable > tbody').empty();
 
             appendResponseRow(e);			

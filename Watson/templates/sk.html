@@ -20,7 +20,7 @@
 
 {% block core_body %}
 
-	<div>Natural Language Index</div>
+	<div></div>
 	<!-- <div><a href="{% url 'watson:newclassifier' %}">Create New Classification</a></div> -->
 	<div style="display:none"><a id="id_newclassoption" href="#" onclick="javascript:onNewClassOption()">Create New Classification</a>
 		<form id="id_newclassform" 
@@ -136,6 +136,9 @@
 		  </button>
         </div>
 		<div>
+		<div class="checkbox">
+		  <label><input id="id_withNLC" type="checkbox" value="">'Speach To Text' with 'Natural Language Classification'</label>
+		</div>
 		  <button type="button" id="id_recordButton">
 			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Record
 		  </button>
@@ -149,7 +152,7 @@
       <br />	  
 
       <div id="id_classifications">
-        <div>Tweet Classifications:</div>
+        <div>Watson API Response:</div>
 	      <table id="id_classtable" class="table">
             <thead>
               <th>Classification</th>

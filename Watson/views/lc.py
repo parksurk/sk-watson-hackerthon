@@ -255,11 +255,72 @@ def staudio(request):
               if "alternatives" in res:
                 alt = res["alternatives"][0]
                 if "transcript" in alt:
+                  # theData = classifyTranscript(classURL, alt["transcript"])
+				  theData = alt
+      fj.close()	   
+  results["results"] = theData		
+  return HttpResponse(json.dumps(results), content_type="application/json") 
+  
+@csrf_exempt  
+def staudio_with_nlc(request):
+  # This request receives an Audio BLOB file which is passed to the
+  # Speech to text service. The response is then forwarded to the 
+  # classifier service.
+  results = {}
+  theData = {"error": "Error detected in REST API"} 	  
+  module_dir = os.path.dirname(__file__)  
+  if request.POST and request.FILES:  
+    
+    form = UploadAudioForm(request.POST, request.FILES)    
+    # Don't bother checking the form, as it is always invalid
+    #if form.is_valid():	
+    #  print("Valid Form")  
+    #else:
+    #   print("Invalid Form")
+	
+    filename = ""
+    classURL = ""
+	
+    if "fname" in request.POST:
+      filename = request.POST["fname"]
+
+    if "classifierurl" in request.POST:
+      classURL = request.POST["classifierurl"]
+	
+    # Saving the file and reading it again, as this ensures that all the data has
+    # been received. This gives a better result from the service.	
+    f = request.FILES['data']	
+    if f:
+       file_path = os.path.join(module_dir, '../static/', filename)	
+       with open(file_path, 'wb+') as destination:
+         for chunk in f.chunks():
+           destination.write(chunk)			  
+       destination.close()	  	   
+	 
+    # Remember to switch	 
+    yy_file_path = os.path.join(module_dir, '../static/', filename)	
+    #yy_file_path = os.path.join(module_dir, '../static/', 'yy.wav')	
+    with open(yy_file_path, 'rb') as fj:
+      audiodata = fj.read()   
+      if audiodata:
+        wdc = WDCService('ST')
+        service_creds = wdc.getCreds()
+        stService = wdc.stService()
+        if stService is None:
+          theData = {"error": "No Speech to Text service found"} 	  
+        else:
+          theData = stService.processAudio(audiodata)
+          if "results" in theData:
+            if list is type(theData["results"]):
+              res = theData["results"][0]
+              if "alternatives" in res:
+                alt = res["alternatives"][0]
+                if "transcript" in alt:
                   theData = classifyTranscript(classURL, alt["transcript"])
       fj.close()	   
   results["results"] = theData		
   return HttpResponse(json.dumps(results), content_type="application/json") 
-	
+  
 def classifyTranscript(classURL, transcript):	
   # Runs classification against a transcript
   # The classifier url must be passed in, as it contains the classifier id.
