@@ -19,6 +19,7 @@ from .piservice import PersonalityInsightsService
 from .taservice import TradeoffAnalyticsService
 from .lcservice import NaturalLanguageClassifierService
 from .stservice import SpeechToTextService
+from .tsservice import TextToSpeechService
 	
 class WDCService(object):
   """
@@ -36,6 +37,8 @@ class WDCService(object):
       self.service = NaturalLanguageClassifierService("env")  
     elif "ST" == self.serviceType :
       self.service = SpeechToTextService("env")  		  
+    elif "TS" == self.serviceType :
+      self.service = TextToSpeechService("env")  		  
 	  
   def getCreds(self):
     """ 

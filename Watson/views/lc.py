@@ -28,6 +28,21 @@ from django.views.decorators.csrf import csrf_exempt
 from Watson.watsonutils.wdc import WDCService
 from Watson.watsonutils.twitservice import TwitterService
 
+from watson_developer_cloud import TextToSpeechV1 as TextToSpeech
+from cognitive.utils.vcap import get_vcap_settings
+
+
+def test():
+    wdc = WDCService('TS')
+    text_to_speech = TextToSpeech(username=wdc.service.user, password=wdc.service.password)
+    #print text_to_speech.voices()
+    module_dir = os.path.dirname(__file__)  
+
+    filename = 'tts.wav'
+    file_path = os.path.join(module_dir, '../static/', filename)	
+    with open(file_path, 'wb+') as audio_file:
+        audio_file.write(text_to_speech.synthesize('Hello World.'))
+
 class UploadClassifierForm(forms.Form):
   classInputFile = forms.FileField()
 	
@@ -363,6 +378,9 @@ def staudio_with_nlc(request):
   results["results"] = theData		
   return HttpResponse(json.dumps(results), content_type="application/json") 
 
+def textToSpeech(text):
+    pass
+  
 def sendDialogAPI(classfier, message):
     print "******** sendDialogAPI classfier :"+classfier
     if classfier == "Accomodations":
