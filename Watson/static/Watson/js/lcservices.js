@@ -335,8 +335,11 @@ function appendResponseRow(e) {
 
 								
 	$('#id_classtable > tbody:last-child').append(testerRowX);	
-	$('#id_line').append($('<li>').addClass('question').text(e["question"]));
-	$('#id_line').append($('<li>').addClass('answer').text(e["message"]));
+	//$('#id_line').append($('<li>').addClass('question').text(e["question"]));
+	//$('#id_line').append($('<li>').addClass('answer').text(e["message"]));
+	$('#id_bootply_line').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><small class="text-muted"><span class="glyphicon glyphicon-time"></span></small><strong class="pull-right primary-font">Tourist</strong></div><p>'+ e['question'] +'</p></div></li>');
+	$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ e['message'] +'</p></div></li>');
+	
 }
 
 function addHoverAnimations(fields) {
@@ -442,4 +445,8 @@ function audioSentOK(response) {
       }
     }		
 	$('#id_recordButton').show();
+	var obj = document.createElement("audio"); 
+    obj.setAttribute("src", "/static/tts.wav");
+    $.get();
+    obj.play();
 }

@@ -29,6 +29,7 @@ $(document).ready(function() {
 function audioButtonStuff() {	
 	var stopButton = $('#id_stopButton');
 	var recordButton = $('#id_recordButton');
+	var chatRefreshButton = $('#id_chatRefreshButton');
 	
 	(function() { 
 		recordButton.click(
@@ -54,6 +55,13 @@ function audioButtonStuff() {
 					}
 				}
 			});
+		chatRefreshButton.click(
+				function(){
+					recordButton.show();
+					stopButton.hide();
+					$("#id_withNLC").prop('checked', true)
+					$('#id_bootply_line').empty();
+				});
 	})();	
 }	
 

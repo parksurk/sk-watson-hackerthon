@@ -31,18 +31,6 @@ from Watson.watsonutils.twitservice import TwitterService
 from watson_developer_cloud import TextToSpeechV1 as TextToSpeech
 from cognitive.utils.vcap import get_vcap_settings
 
-
-def test():
-    wdc = WDCService('TS')
-    text_to_speech = TextToSpeech(username=wdc.service.user, password=wdc.service.password)
-    #print text_to_speech.voices()
-    module_dir = os.path.dirname(__file__)  
-
-    filename = 'tts.wav'
-    file_path = os.path.join(module_dir, '../static/', filename)	
-    with open(file_path, 'wb+') as audio_file:
-        audio_file.write(text_to_speech.synthesize('Hello World.'))
-
 class UploadClassifierForm(forms.Form):
   classInputFile = forms.FileField()
 	
@@ -222,6 +210,7 @@ def staudio(request):
   # Speech to text service. The response is then forwarded to the 
   # classifier service.
   results = {}
+  tts_input = ''
   theData = {"error": "Error detected in REST API"} 	  
   module_dir = os.path.dirname(__file__)  
   if request.POST and request.FILES:  
@@ -287,12 +276,15 @@ def staudio(request):
                         "client_id": request.POST["client_id"],
                         "dialog_id": request.POST["dialog_id"],
                       } 
-                  res = sendDialogAPI(request.POST["category"], {'data': json.dumps(data)}) 
+                  res = sendDialogAPI(request.POST["category"], {'data': json.dumps(data)})
                   theData = res['results']  
                   theData['category'] = request.POST["category"]
                   theData['question'] = question
-      fj.close()	   
-  results["results"] = theData		
+                  tts_input = theData['conversationData']['response']
+      fj.close()
+  results["results"] = theData
+
+  textToSpeech(tts_input)
   return HttpResponse(json.dumps(results), content_type="application/json") 
   
 @csrf_exempt  
@@ -301,6 +293,7 @@ def staudio_with_nlc(request):
   # Speech to text service. The response is then forwarded to the 
   # classifier service.
   results = {}
+  tts_input = ''
   theData = {"error": "Error detected in REST API"} 	  
   module_dir = os.path.dirname(__file__)  
   if request.POST and request.FILES:  
@@ -373,18 +366,28 @@ def staudio_with_nlc(request):
                   theData = res['results']
                   theData['category'] = category
                   theData['question'] = question
-                  
+                  tts_input = theData['conversationData']['response']
       fj.close()	   
-  results["results"] = theData		
+  results["results"] = theData
+  textToSpeech(tts_input)
   return HttpResponse(json.dumps(results), content_type="application/json") 
 
 def textToSpeech(text):
-    pass
+    wdc = WDCService('TS')
+    text_to_speech = TextToSpeech(username=wdc.service.user, password=wdc.service.password)
+    #print text_to_speech.voices()
+    module_dir = os.path.dirname(__file__)  
+
+    filename = 'tts.wav'
+    file_path = os.path.join(module_dir, '../static/', filename)    
+    with open(file_path, 'wb+') as audio_file:
+        audio_file.write(text_to_speech.synthesize(text))
   
 def sendDialogAPI(classfier, message):
     print "******** sendDialogAPI classfier :"+classfier
     if classfier == "Accomodations":
-        url = "http://jseo-proj-watson.mybluemix.net/wl/converse"
+        #url = "http://jseo-proj-watson.mybluemix.net/wl/converse"
+        url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
     elif classfier == "restaurants":
         url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
     print 'requesting to {} for "{}"'.format(url, message)
