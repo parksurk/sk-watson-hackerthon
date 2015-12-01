@@ -338,8 +338,8 @@ function appendResponseRow(e) {
 	//$('#id_line').append($('<li>').addClass('question').text(e["question"]));
 	//$('#id_line').append($('<li>').addClass('answer').text(e["message"]));
 	$('#id_bootply_line').append('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><small class="text-muted"><span class="glyphicon glyphicon-time"></span></small><strong class="pull-right primary-font">Tourist</strong></div><p>'+ e['question'] +'</p></div></li>');
-	$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ e['message'] +'</p></div></li>');
-	
+	$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ e['message'] +'</p></div></li>');
+	updateScroll();
 }
 
 function addHoverAnimations(fields) {
@@ -400,7 +400,8 @@ function audioSentNotOK() {
 
 function audioSentOK(response) {
 	setStatusMessage('i', "Call was good - processing the Results");
-	
+	var isDialogueFinished = false;
+	var rnr_query = '';
 	var results = response['results'];	
 	if (results) {
 		var errMessage = results['error'];
@@ -422,6 +423,11 @@ function audioSentOK(response) {
                     question: results['question']
 
                     }
+				conversationResults = results['conversationData']
+				if (conversationResults.hasOwnProperty('isFinished') && conversationResults['isFinished']=='YES'){
+					isDialogueFinished = true;
+					rnr_query = results['conversationData']['response']
+				}
                 category = results['category'],
                 client_id = results['conversationData']['client_id'],
                 conversation_id = results['conversationData']['conversation_id'],
@@ -449,4 +455,63 @@ function audioSentOK(response) {
     obj.setAttribute("src", "/static/tts.wav");
     $.get();
     obj.play();
+    if(isDialogueFinished){
+    	alert("Dialogue is finished!!!");
+    	handleRnrInput(rnr_query);
+    }
+}
+
+function handleRnrInput(rnr_query) {
+	var fd = new FormData();
+	fd.append('rnr_user_id', 'f46398e8-51c3-43e5-9494-bce1a9a2f2d0');	
+	fd.append('rnr_passwd', 'RNHJsMuwZ3ah');rnr_query
+	fd.append('rnr_query', rnr_query);
+	$.ajax({
+		type: 'POST',
+		url: '/watson/rnr',
+		data: fd,
+		processData: false,
+		contentType: false,
+		success: rnrSentOK,
+		error: rnrSentNotOK
+	});
+
+	setStatusMessage('i', "Retrieve and Rank Params sent to server, waiting for a response");	
+}
+
+function rnrSentNotOK() {
+	setStatusMessage('d', "Transmission of Retrieve and Rank Params Failed");
+	$('#id_recordButton').show();
+}
+
+function rnrSentOK(response) {
+	setStatusMessage('i', "Retrieve and Rank Params Call was good - processing the Results");
+	var isDialogueFinished = false;
+	var responseHeader = response['responseHeader'];
+	if (responseHeader) {
+		var status = responseHeader['status'];
+		if (status != 0) {
+			setStatusMessage('d', status);	
+		}	
+		else {
+			var e;
+			var results = response['response'];
+			if (results.hasOwnProperty('docs')) {
+				e = results['docs'];
+				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ JSON.stringify(e) +'</p></div></li>');
+			}
+										
+			$('#id_response').text("Retrieve and Rank complete");
+			setStatusMessage('i', "Retrieve and Rank completed");		  
+			$('#id_classifications').show();		  
+			addHoverAnimations($('.twitclassline'));
+      }
+    }		
+	$('#id_recordButton').show();
+
+}
+
+function updateScroll(){
+    var element = document.getElementById("chat_body");
+    element.scrollTop = element.scrollHeight;
 }

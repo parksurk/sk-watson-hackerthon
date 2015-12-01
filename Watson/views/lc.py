@@ -204,7 +204,7 @@ def classifyTweets(classURL, twitTimeLine):
 class UploadAudioForm(forms.Form):
   file = forms.FileField()  
 	
-@csrf_exempt  
+@csrf_exempt
 def staudio(request):
   # This request receives an Audio BLOB file which is passed to the
   # Speech to text service. The response is then forwarded to the 
@@ -286,8 +286,8 @@ def staudio(request):
 
   textToSpeech(tts_input)
   return HttpResponse(json.dumps(results), content_type="application/json") 
-  
-@csrf_exempt  
+
+@csrf_exempt
 def staudio_with_nlc(request):
   # This request receives an Audio BLOB file which is passed to the
   # Speech to text service. The response is then forwarded to the 
@@ -372,6 +372,27 @@ def staudio_with_nlc(request):
   textToSpeech(tts_input)
   return HttpResponse(json.dumps(results), content_type="application/json") 
 
+@csrf_exempt
+def rnr(request):
+  # This request receives an Audio BLOB file which is passed to the
+  # Speech to text service. The response is then forwarded to the 
+  # classifier service.
+  results = {}
+  tts_input = ''
+  theData = {"error": "Error detected in REST API"}       
+  if request.POST:  
+      data = {}
+      data = {"q": request.POST["rnr_query"],
+        "rnr_user_id": request.POST["rnr_user_id"],
+        "rnr_passwd": request.POST["rnr_passwd"],
+        "wt":"json",
+        "ranker_id":"F35BD1x2-rank-433",
+        "fl":"score,id,title,body,domain",
+      } 
+      results = sendRnrAPI(request.POST["rnr_user_id"], request.POST["rnr_passwd"], data)
+
+  return HttpResponse(json.dumps(results), content_type="application/json") 
+
 def textToSpeech(text):
     wdc = WDCService('TS')
     text_to_speech = TextToSpeech(username=wdc.service.user, password=wdc.service.password)
@@ -393,6 +414,19 @@ def sendDialogAPI(classfier, message):
     print 'requesting to {} for "{}"'.format(url, message)
     response = requests.post( url ,
                          data = message,
+                         )
+    try:
+      result = json.loads(response.text)
+      return result
+    except:
+      raise Exception("Error processing the request, HTTP: %d" % response.status_code)
+
+def sendRnrAPI(rnr_user_id, rnr_passwd, params):
+
+    url = "https://f46398e8-51c3-43e5-9494-bce1a9a2f2d0:RNHJsMuwZ3ah@gateway.watsonplatform.net/retrieve-and-rank/api/v1/solr_clusters/sc0e7faf94_accd_4f76_bfd0_8b4760ea9c75/solr/korearestaurants-collection/fcselect"
+
+    response = requests.get( url ,
+                         params = params,
                          )
     try:
       result = json.loads(response.text)

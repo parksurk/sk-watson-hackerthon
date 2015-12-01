@@ -22,7 +22,7 @@ from .views.DetailView import BFDetailView
 urlpatterns = patterns('',
     url(r'^$', BFIndexView.as_view(), name='personalities'),
     url(r'^(?P<pk>\d+)/$', BFDetailView.as_view(), name='detail'),
-	
+
     url(r'^pi$', pi.piindex, name='pinsights'),	
     url(r'^pireq$', pi.pireq, name='piapi'),
 
@@ -34,9 +34,10 @@ urlpatterns = patterns('',
     url(r'^lclist$', lc.lclist, name='nllist'),	
     url(r'^nlccreate$', lc.nlcnew, name='newclassifier'),	
     url(r'^nlccreatex$', lc.nlcnewx, name='newclassifierx'),	 
-	url(r'^lctwitsearch$', lc.twitsearch, name='nltwitsearch'),
-	url(r'^lcdrop', lc.drop, name='nldrop'),
-	
-    url(r'^staudio$', lc.staudio, name='audiosample'),		
-	url(r'^staudio_with_nlc$', lc.staudio_with_nlc, name='audiosample'),	
+    url(r'^lctwitsearch$', lc.twitsearch, name='nltwitsearch'),
+    url(r'^lcdrop', lc.drop, name='nldrop'),
+
+    url(r'^staudio$', lc.staudio, name='audiosample'),
+    url(r'^staudio_with_nlc$', lc.staudio_with_nlc, name='audiosample'),
+    url(r'^rnr$', lc.rnr, name='audiosample'),
 )
