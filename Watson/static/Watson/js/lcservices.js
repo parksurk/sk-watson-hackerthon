@@ -456,7 +456,7 @@ function audioSentOK(response) {
     $.get();
     obj.play();
     if(isDialogueFinished){
-    	alert("Dialogue is finished!!!");
+    	//alert("Dialogue is finished!!!");
     	handleRnrInput(rnr_query);
     }
 }
@@ -494,11 +494,23 @@ function rnrSentOK(response) {
 			setStatusMessage('d', status);	
 		}	
 		else {
-			var e;
+			var e = "";
 			var results = response['response'];
 			if (results.hasOwnProperty('docs')) {
-				e = results['docs'];
-				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ JSON.stringify(e) +'</p></div></li>');
+				docs = results['docs'];
+				e += "<div class='panel panel-default'> <div class='panel-heading'>Retrieve and Rank Results</div> <table class='table'>";
+				e += "<thead><tr> <th>#</th> <th>Title</th> <th>Score</th> <th>Domain</th> <th>Detail</th> </tr> </thead> <tbody>";
+				for (var i = 0; i < docs.length; i++) { 
+					e += "<tr>";
+					e = e + "<td>" + (i+1) +"</td>";
+					e = e + "<td>" + docs[i]['title'] +"</td>";
+					e = e + "<td>" + docs[i]['score'] +"</td>";
+					e = e + "<td>" + docs[i]['domain'] +"</td>";
+					e = e + "<td>" + "..." +"</td>";
+					e += "</tr>";
+				}
+				e += "</tbody> </table> </div>";
+				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ e +'</p></div></li>');
 			}
 										
 			$('#id_response').text("Retrieve and Rank complete");
