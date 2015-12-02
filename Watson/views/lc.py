@@ -386,7 +386,7 @@ def rnr(request):
         "rnr_user_id": request.POST["rnr_user_id"],
         "rnr_passwd": request.POST["rnr_passwd"],
         "wt":"json",
-        "ranker_id":"F35BD1x2-rank-433",
+        "ranker_id":"F3551Dx1-rank-428",
         "fl":"score,id,title,body,domain",
       } 
       results = sendRnrAPI(request.POST["rnr_user_id"], request.POST["rnr_passwd"], data)
