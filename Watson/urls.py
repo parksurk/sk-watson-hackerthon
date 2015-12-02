@@ -40,4 +40,5 @@ urlpatterns = patterns('',
     url(r'^staudio$', lc.staudio, name='audiosample'),
     url(r'^staudio_with_nlc$', lc.staudio_with_nlc, name='audiosample'),
     url(r'^rnr$', lc.rnr, name='audiosample'),
+    url(r'^rnrsearch$', lc.rnrSearch, name='audiosample'),
 )

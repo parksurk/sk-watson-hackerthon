@@ -458,6 +458,7 @@ function audioSentOK(response) {
     if(isDialogueFinished){
     	//alert("Dialogue is finished!!!");
     	handleRnrInput(rnr_query);
+    	handleRnrSearchInput(rnr_query);
     }
 }
 
@@ -496,11 +497,83 @@ function rnrSentOK(response) {
 		else {
 			var e = "";
 			var results = response['response'];
+			var iter_count = 0;
 			if (results.hasOwnProperty('docs')) {
 				docs = results['docs'];
 				e += "<div class='panel panel-default'> <div class='panel-heading'>Retrieve and Rank Results</div> <table class='table table-striped table-labels'>";
 				e += "<thead><tr> <th>#</th> <th>Title</th> <th>Score</th> <th>Domain</th> <th>Detail</th> </tr> </thead> <tbody>";
-				for (var i = 0; i < docs.length; i++) { 
+				iter_count = docs.length;
+				if (docs.length > 3){
+					iter_count = 3;
+				}
+				for (var i = 0; i < iter_count; i++) { 
+					e += "<tr>";
+					e = e + "<td>" + (i+1) +"</td>";
+					e = e + "<td>" + docs[i]['title'] +"</td>";
+					e = e + "<td>" + docs[i]['score'] +"</td>";
+					e = e + "<td>" + docs[i]['domain'] +"</td>";
+					e = e + "<td><a href='#' data-toggle='tooltip' title='"+escapeSingleQuote(docs[i]['body'])+"'>" + "<button type='button' class='btn btn-default' aria-label='Left Align'><span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span></button>"+"</a></td>";
+					e += "</tr>";
+				}
+				e += "</tbody> </table> </div>";
+				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div>'+ e +'</div></li>');
+			}
+										
+			$('#id_response').text("Retrieve and Rank complete");
+			setStatusMessage('i', "Retrieve and Rank completed");		  
+			$('#id_classifications').show();		  
+			addHoverAnimations($('.twitclassline'));
+      }
+    }		
+	$('#id_recordButton').show();
+	updateScroll();
+}
+
+function handleRnrSearchInput(rnr_query) {
+	var fd = new FormData();
+	fd.append('rnr_user_id', 'f46398e8-51c3-43e5-9494-bce1a9a2f2d0');	
+	fd.append('rnr_passwd', 'RNHJsMuwZ3ah');rnr_query
+	fd.append('rnr_query', rnr_query);
+	$.ajax({
+		type: 'POST',
+		url: '/watson/rnrsearch',
+		data: fd,
+		processData: false,
+		contentType: false,
+		success: rnrSearchSentOK,
+		error: rnrSearchSentNotOK
+	});
+
+	setStatusMessage('i', "Retrieve and Rank Search Params sent to server, waiting for a response");	
+}
+
+function rnrSearchSentNotOK() {
+	setStatusMessage('d', "Transmission of Retrieve and Rank Search Params Failed");
+	$('#id_recordButton').show();
+}
+
+function rnrSearchSentOK(response) {
+	setStatusMessage('i', "Retrieve and Rank SeearchParams Call was good - processing the Results");
+	var isDialogueFinished = false;
+	var responseHeader = response['responseHeader'];
+	if (responseHeader) {
+		var status = responseHeader['status'];
+		if (status != 0) {
+			setStatusMessage('d', status);	
+		}	
+		else {
+			var e = "";
+			var results = response['response'];
+			var iter_count = 0;
+			if (results.hasOwnProperty('docs')) {
+				docs = results['docs'];
+				e += "<div class='panel panel-default'> <div class='panel-heading'>Search Engine Results</div> <table class='table table-striped table-labels'>";
+				e += "<thead><tr> <th>#</th> <th>Title</th> <th>Score</th> <th>Domain</th> <th>Detail</th> </tr> </thead> <tbody>";
+				iter_count = docs.length;
+				if (docs.length > 3){
+					iter_count = 3;
+				}
+				for (var i = 0; i < iter_count; i++) { 
 					e += "<tr>";
 					e = e + "<td>" + (i+1) +"</td>";
 					e = e + "<td>" + docs[i]['title'] +"</td>";
