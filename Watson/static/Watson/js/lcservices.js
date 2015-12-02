@@ -498,7 +498,7 @@ function rnrSentOK(response) {
 			var results = response['response'];
 			if (results.hasOwnProperty('docs')) {
 				docs = results['docs'];
-				e += "<div class='panel panel-default'> <div class='panel-heading'>Retrieve and Rank Results</div> <table class='table'>";
+				e += "<div class='panel panel-default'> <div class='panel-heading'>Retrieve and Rank Results</div> <table class='table table-striped table-labels'>";
 				e += "<thead><tr> <th>#</th> <th>Title</th> <th>Score</th> <th>Domain</th> <th>Detail</th> </tr> </thead> <tbody>";
 				for (var i = 0; i < docs.length; i++) { 
 					e += "<tr>";
@@ -506,11 +506,11 @@ function rnrSentOK(response) {
 					e = e + "<td>" + docs[i]['title'] +"</td>";
 					e = e + "<td>" + docs[i]['score'] +"</td>";
 					e = e + "<td>" + docs[i]['domain'] +"</td>";
-					e = e + "<td>" + "..." +"</td>";
+					e = e + "<td><a href='#' data-toggle='tooltip' title='"+escapeSingleQuote(docs[i]['body'])+"'>" + "<button type='button' class='btn btn-default' aria-label='Left Align'><span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span></button>"+"</a></td>";
 					e += "</tr>";
 				}
 				e += "</tbody> </table> </div>";
-				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div><p>'+ e +'</p></div></li>');
+				$('#id_bootply_line').append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&amp;text=WATSON" alt="User Avatar" class="img-circle"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Watson</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span></small></div>'+ e +'</div></li>');
 			}
 										
 			$('#id_response').text("Retrieve and Rank complete");
@@ -520,10 +520,26 @@ function rnrSentOK(response) {
       }
     }		
 	$('#id_recordButton').show();
-
+	updateScroll();
 }
 
 function updateScroll(){
     var element = document.getElementById("chat_body");
     element.scrollTop = element.scrollHeight;
 }
+
+/**
+ * Escapes characters in the string that are not safe to use in a RegExp.
+ * @param {*} s The string to escape. If not a string, it will be casted
+ *     to one.
+ * @return {string} A RegExp safe, escaped copy of {@code s}.
+ */
+function escapeRegexp(s) {
+    return String(s).replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
+      replace(/\x08/g, '\\x08');
+};
+
+function escapeSingleQuote(s) {
+    //return String(s).replace(/'/g, "\\'");
+	return String(s).replace(/'/g, "");
+};

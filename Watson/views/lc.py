@@ -407,8 +407,8 @@ def textToSpeech(text):
 def sendDialogAPI(classfier, message):
     print "******** sendDialogAPI classfier :"+classfier
     if classfier == "Accomodations":
-        #url = "http://jseo-proj-watson.mybluemix.net/wl/converse"
-        url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
+        url = "http://jseo-proj-watson.mybluemix.net/wl/converse"
+        #url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
     elif classfier == "restaurants":
         url = "http://sc-proj-watson007.mybluemix.net/wl/converse"
     print 'requesting to {} for "{}"'.format(url, message)
