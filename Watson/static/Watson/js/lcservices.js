@@ -458,6 +458,7 @@ function audioSentOK(response) {
     if(isDialogueFinished){
     	//alert("Dialogue is finished!!!");
     	handleRnrInput(rnr_query);
+    	sleep(1000);
     	handleRnrSearchInput(rnr_query);
     }
 }
@@ -615,4 +616,12 @@ function escapeRegexp(s) {
 function escapeSingleQuote(s) {
     //return String(s).replace(/'/g, "\\'");
 	return String(s).replace(/'/g, "");
+};
+
+/**
+ * Delay for a number of milliseconds
+ */
+function sleep(delay) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
 };
